@@ -1,0 +1,51 @@
+<div class="container mt-5">
+  <div class="card shadow-lg p-4 border-0 rounded-4">
+    <h3 class="text-center mb-4 fw-bold text-primary">Add New Product</h3>
+
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+      <div class="row g-3">
+
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Product Name</label>
+          <input type="text" class="form-control form-control-lg" placeholder="Enter product name" formControlName="name" />
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-semibold">Category</label>
+          <input type="text" class="form-control form-control-lg" placeholder="Enter category" formControlName="category" />
+        </div>
+
+        <div class="col-12">
+          <label class="form-label fw-semibold">Description</label>
+          <textarea rows="3" class="form-control" placeholder="Enter product description" formControlName="description"></textarea>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label fw-semibold">Price (₹)</label>
+          <input type="number" class="form-control form-control-lg" placeholder="Enter price" formControlName="price" />
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label fw-semibold">Discount (%)</label>
+          <input type="number" class="form-control form-control-lg" placeholder="Optional" formControlName="discount" />
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label fw-semibold">Available Sizes</label>
+          <input type="text" class="form-control form-control-lg" placeholder="e.g., S, M, L" formControlName="sizes" />
+        </div>
+
+        <div class="col-12">
+          <label class="form-label fw-semibold">Upload Product Image</label>
+          <input type="file" class="form-control form-control-lg" (change)="onFileChange($event)" />
+        </div>
+
+      </div>
+
+      <div class="text-center mt-4">
+        <button class="btn btn-gradient px-5 py-2 rounded-pill">Upload Product</button>
+      </div>
+    </form>
+
+  </div>
+</div>

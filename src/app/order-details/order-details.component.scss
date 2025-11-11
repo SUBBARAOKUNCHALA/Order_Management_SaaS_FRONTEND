@@ -1,0 +1,170 @@
+/* PAGE TITLE */
+.page-title {
+  font-size: 30px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 25px;
+  animation: fadeIn 1s ease;
+}
+
+/* LOADER */
+.loader-wrap {
+  text-align: center;
+  padding: 40px 0;
+}
+
+/* EMPTY STATE */
+.no-orders {
+  text-align: center;
+  color: #777;
+  margin-top: 40px;
+}
+
+.empty-img {
+  width: 160px;
+  opacity: 0.8;
+  margin-bottom: 10px;
+}
+
+/* ORDER CARD */
+.order-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 18px;
+  margin-bottom: 22px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+  transition: 0.35s ease;
+}
+
+.order-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.18);
+}
+
+/* HEADER */
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-id {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.order-date {
+  font-size: 13px;
+  color: gray;
+}
+
+/* STATUS BADGES */
+.status-badge {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  text-transform: capitalize;
+  font-size: 13px;
+}
+
+.status-badge.Pending { background: #fff3cd; color: #856404; }
+.status-badge.Completed { background: #d4edda; color: #155724; }
+.status-badge.Cancelled { background: #f8d7da; color: #842029; }
+
+/* ORDER ITEMS */
+.order-item {
+  display: flex;
+  gap: 16px;
+  margin: 12px 0;
+  padding: 12px;
+  border-radius: 14px;
+  background: #fafafa;
+  transition: 0.3s;
+  border: 1px solid #ececec;
+}
+
+.order-item:hover {
+  background: #eaf4ff;
+  transform: scale(1.02);
+}
+
+.item-img {
+  width: 72px;
+  height: 72px;
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+}
+
+.item-name {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.item-price {
+  font-weight: 700;
+  color: #2e7d32;
+}
+
+/* FOOTER */
+.order-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-total {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* BUTTONS */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-view, .btn-cancel {
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+/* VIEW BUTTON */
+.btn-view {
+  background: linear-gradient(135deg, #007bff, #0056d2);
+  color: #fff;
+}
+
+.btn-view:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+}
+
+/* CANCEL BUTTON */
+.btn-cancel {
+  background: linear-gradient(135deg, #ff4444, #cc0000);
+  color: #fff;
+}
+
+.btn-cancel:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 50, 50, 0.4);
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in { animation: fadeIn 0.8s ease; }
+.animate-slide-up { animation: slideUp 0.6s ease; }

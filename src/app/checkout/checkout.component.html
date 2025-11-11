@@ -1,0 +1,105 @@
+<div class="checkout-container container py-4">
+
+  <!-- PAGE TITLE -->
+  <h2 class="text-center mb-4 checkout-title">Checkout</h2>
+
+  <div class="row">
+
+    <!-- LEFT: ORDER ITEMS -->
+    <div class="col-lg-7 mb-4">
+
+      <div class="card shadow-sm p-3">
+        <h4 class="section-title">Your Items</h4>
+
+        <div *ngFor="let item of cartItems" class="checkout-item">
+
+          <img [src]="item.product.imageUrl" class="item-img">
+
+          <div class="item-info">
+            <h5 class="item-name">{{ item.product.name }}</h5>
+            <p class="item-category">{{ item.product.category }}</p>
+
+            <div class="price-row">
+              <span class="price">₹{{ item.product.price }}</span>
+              <span class="qty">x {{ item.quantity }}</span>
+            </div>
+
+            <div class="item-total">
+              Total: <b>₹{{ item.product.price * item.quantity }}</b>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: ORDER SUMMARY + FORM -->
+    <div class="col-lg-5">
+
+      <!-- ORDER SUMMARY -->
+      <div class="card shadow-sm p-3 mb-4">
+        <h4 class="section-title">Order Summary</h4>
+
+        <div class="summary-line">
+          <span>Items Total</span>
+          <b>₹{{ totalAmount }}</b>
+        </div>
+
+        <div class="summary-line">
+          <span>Delivery Fee</span>
+          <b>₹0</b>
+        </div>
+
+        <hr />
+
+        <div class="summary-total">
+          <span>Grand Total</span>
+          <b>₹{{ totalAmount }}</b>
+        </div>
+      </div>
+
+      <!-- ADDRESS FORM -->
+      <div class="card shadow-sm p-4">
+        <h4 class="section-title">Shipping Details</h4>
+
+        <form (ngSubmit)="placeOrder()" #orderForm="ngForm">
+
+          <input type="text" class="form-control mb-3" placeholder="Full Name" [(ngModel)]="customerName"
+            name="customerName" required />
+
+          <input type="text" class="form-control mb-3" placeholder="Phone Number" [(ngModel)]="customerPhone"
+            name="customerPhone" maxlength="10" (keypress)="allowOnlyNumbers($event)" required />
+
+          <textarea class="form-control mb-3" placeholder="Shipping Address" [(ngModel)]="shippingAddress"
+            name="shippingAddress" required></textarea>
+
+          <select class="form-control mb-3" [(ngModel)]="paymentMethod" name="paymentMethod"
+            (change)="paymentMethod === 'ONLINE' ? generateQR() : null" required>
+            <option value="COD">Cash On Delivery</option>
+            <option value="ONLINE">Online Payment</option>
+          </select>
+
+          <button class="btn btn-success btn-lg w-100 mt-2">
+            Place Order
+          </button>
+
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<div class="qr-popup-overlay" *ngIf="showQRPopup">
+  <div class="qr-popup">
+    <h4 class="mb-2">Scan & Pay</h4>
+
+    <img [src]="paymentQR" class="qr-image" />
+
+    <button class="btn btn-danger mt-3 w-100" (click)="showQRPopup = false">
+      Close
+    </button>
+  </div>
+</div>

@@ -1,0 +1,68 @@
+<div class="cart-wrapper" *ngIf="cartItems.length > 0; else emptyCart">
+
+  <h2 class="cart-title">Your Cart</h2>
+
+  <div class="table-responsive">
+    <table class="table cart-table table-bordered align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th>Image</th>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Qty</th>
+          <th>Total</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let item of cartItems">
+          <td>
+            <img [src]="item.product.imageUrl" class="cart-img"/>
+          </td>
+
+          <td>
+            <strong>{{ item.product.name }}</strong><br/>
+            <small class="text-muted">{{ item.product.category }}</small>
+          </td>
+
+          <td>₹{{ item.product.price }}</td>
+
+          <td>
+            <div class="qty-controls">
+              <button (click)="decreaseQty(item)" class="qty-btn">-</button>
+              <span class="qty-value">{{ item.quantity }}</span>
+              <button (click)="increaseQty(item)" class="qty-btn">+</button>
+            </div>
+          </td>
+
+          <td>
+            ₹{{ item.product.price * item.quantity }}
+          </td>
+
+          <td>
+            <button class="btn btn-danger btn-sm" (click)="removeItem(item.product._id)">
+              Remove
+            </button>
+          </td>
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+
+  <!--  BUY NOW + CLEAR CART -->
+  <div class="cart-actions">
+    <button class="btn btn-warning btn-lg" (click)="clearCart()">Clear Cart</button>
+    <button class="btn btn-primary btn-lg buy-btn" (click)="buyNow()">BUY NOW</button>
+  </div>
+
+</div>
+
+<!--  Empty Cart -->
+<ng-template #emptyCart>
+  <div class="empty-cart">
+    <h3>Your cart is empty</h3>
+    <a routerLink="/" class="btn btn-primary mt-3">Continue Shopping</a>
+  </div>
+</ng-template>

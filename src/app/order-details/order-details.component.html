@@ -1,0 +1,61 @@
+<div class="container py-4">
+
+  <h2 class="page-title">My Orders</h2>
+
+  <!-- Loader -->
+  <div *ngIf="loading" class="loader-wrap">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+
+  <!-- No Orders -->
+  <div *ngIf="!loading && orders.length === 0" class="no-orders animate-fade-in">
+    <img src="assets/empty-orders.png" class="empty-img">
+    <p>No orders found.</p>
+  </div>
+
+  <!-- Orders List -->
+  <div *ngFor="let order of orders" class="order-card animate-slide-up">
+
+    <div class="order-header">
+      <div>
+        <h3 class="order-id">Order #{{ order._id }}</h3>
+        <p class="order-date">{{ order.createdAt | date:'short' }}</p>
+      </div>
+
+      <span class="status-badge" [ngClass]="order.status">
+        {{ order.status }}
+      </span>
+    </div>
+
+    <hr>
+
+    <!-- Items -->
+    <div *ngFor="let item of order.items" class="order-item">
+      <img [src]="item.image" class="item-img">
+      <div>
+        <p class="item-name">{{ item.productName }}</p>
+        <p class="item-qty">Qty: {{ item.quantity }}</p>
+        <p class="item-price">₹ {{ item.price }}</p>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="order-footer">
+      <p class="order-total">Total: ₹ {{ order.orderAmount }}</p>
+
+      <div class="action-buttons">
+        <button class="btn-view" (click)="viewOrder(order._id)">View</button>
+
+        <button
+          class="btn-cancel"
+          *ngIf="order.status !== 'Cancelled'"
+          (click)="cancelOrder(order._id)"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

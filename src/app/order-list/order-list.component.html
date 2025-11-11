@@ -1,0 +1,66 @@
+<div class="container py-4" *ngIf="order">
+
+  <h2 class="page-title">Order Details</h2>
+
+  <div class="order-card animate-fade-in">
+
+    <div class="order-section">
+      <p><b>Order ID:</b> {{ order._id }}</p>
+      <p><b>Name:</b> {{ order.customerName }}</p>
+      <p><b>Phone:</b> {{ order.customerPhone }}</p>
+      <p><b>Address:</b> {{ order.shippingAddress }}</p>
+      <p><b>Payment:</b> {{ order.paymentMethod }}</p>
+
+<h3 class="section-title mt-4">Order Tracking</h3>
+
+<div class="tracking-container mb-4">
+
+  <div *ngFor="let step of statusSteps; let i = index" class="tracking-step">
+
+    <div class="circle" [class.active]="i <= currentStep"></div>
+
+    <p class="label" [class.active-text]="i <= currentStep">
+      {{ step }}
+    </p>
+
+    <div 
+      *ngIf="i < statusSteps.length - 1" 
+      class="line"
+      [class.active-line]="i < currentStep">
+    </div>
+
+  </div>
+
+</div>
+
+    </div>
+
+    <hr>
+
+    <h3 class="section-title">Items</h3>
+
+    <div *ngFor="let item of order.items" class="item-row animate-slide-up">
+      <img [src]="item.image" class="item-img">
+      
+      <div class="item-info">
+        <p class="item-name">{{ item.productName }}</p>
+        <p class="text-muted">Qty: {{ item.quantity }}</p>
+        <p class="item-price">₹ {{ item.price }}</p>
+      </div>
+    </div>
+
+    <hr>
+
+    <h2 class="total-amount">Total: ₹ {{ order.orderAmount }}</h2>
+
+    <button class="btn btn-primary btn-lg mt-3 w-30 animated-btn" (click)="GoBack()">
+      Go Back
+    </button>
+    &nbsp;
+    &nbsp;
+    <button class="btn btn-primary btn-lg mt-3 w-30 animated-btn" (click)="ContinueShoping()">
+      Continue Shoping
+    </button>
+
+  </div>
+</div>

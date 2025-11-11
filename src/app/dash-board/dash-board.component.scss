@@ -1,0 +1,389 @@
+.body{
+  background-color: rgb(248, 248, 248);
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  background: #130c75;
+  color: #98aef7;
+  padding: 12px 20px;
+}
+.navbar-brand{
+  font-family: 'Montserrat', sans-serif; /* Elegant font */
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #ffffff;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+.navbar-links button {
+  margin-left: 10px;
+  background: #fff;
+  color: #333;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+.product-container {
+  margin-top: 100px; /* push content below navbar */
+}
+
+
+/* Product Cards */
+.product-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+.product-card {
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 12px;
+  transition: transform 0.3s;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+.product-card:hover {
+  transform: translateY(-5px);
+}
+.product-image-wrapper {
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+}
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.product-price {
+  font-size: 16px;
+  color: #222;
+  margin: 8px 0;
+}
+.product-discount {
+  color: red;
+  margin-left: 8px;
+}
+.size-options {
+  display: flex;
+  gap: 5px;
+  margin: 5px 0 10px;
+}
+.size-box {
+  padding: 4px 8px;
+  background: #eee;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+/* Add to Cart Button */
+.add-to-cart {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+.add-to-cart:hover {
+  background: #0056b3;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  gap: 15px;
+}
+.pagination button {
+  padding: 6px 14px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+.pagination span {
+  font-weight: bold;
+}
+
+/* Modal */
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+}
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  float: right;
+}
+
+.detail-image {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.description {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* only show 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* Zoom Overlay */
+.zoom-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  cursor: zoom-out;
+}
+
+.zoom-modal img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 10px;
+}
+
+
+.footer {
+  background-color: #0c1d69;
+  color: #fff;
+  padding: 30px 20px;
+  margin-top: 50px;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.footer-container > div {
+  flex: 1 1 250px;
+  margin: 10px;
+}
+
+.footer h3 {
+  font-family: 'Montserrat', sans-serif;
+  margin-bottom: 10px;
+}
+
+.footer p,
+.footer a {
+  font-size: 14px;
+  color: #ccc;
+}
+
+.footer a {
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: #fff;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 13px;
+  border-top: 1px solid #444;
+  padding-top: 10px;
+}
+/* Container for size selector */
+.sizes {
+  display: flex;
+  gap: 4px; /* smaller gap */
+}
+
+.size-option {
+  position: relative;
+  cursor: pointer;
+  padding: 4px 8px; /* reduced padding */
+  border: 1px solid #ccc; /* thinner border */
+  border-radius: 4px; /* smaller rounded corners */
+  font-size: 12px; /* smaller text */
+  user-select: none;
+  color: #0056b3;
+  transition: all 0.2s ease;
+}
+
+/* Hide actual radio */
+.size-option input {
+  display: none;
+}
+
+/* Hover effect */
+.size-option:hover {
+  border-color: #666;
+}
+
+/* When selected */
+.size-option.selected {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* Quantity control - styled properly */
+::ng-deep .quantity-control {
+  margin-top: 5px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+  width: fit-content;
+
+  button {
+    background: #f1f1f1;
+    border: none;
+    padding: 4px 10px; /* Smaller padding */
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: #ddd;
+    }
+  }
+
+  input {
+    width: 40px;
+    text-align: center;
+    border: none;
+    outline: none;
+    font-size: 13px;
+    padding: 4px;
+  }
+}
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: #030847f8;
+  color: white;
+}
+
+.navbar-brand {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.navbar-links button {
+  background: transparent;
+  border: none;
+  color: white;
+  margin-left: 15px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.navbar-links button:hover {
+  color: rgb(62, 143, 219);
+  transform: scale(1.2);
+}
+/* Reduce panel height */
+.product-detail-panel {
+  position: fixed;
+  top: 60px;
+  right: 0;
+  width: 300px;
+  max-height: 85vh;
+  background: #fff;
+  border-radius: 10px 0 0 10px;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.2);
+  padding: 15px;
+  overflow-y: auto;
+  z-index: 999;
+  animation: slideIn 0.3s ease-in-out;
+}
+
+/* Smaller modal image */
+.product-detail-panel img.modal-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: zoom-in;
+}
+
+/* Click zoom effect */
+.zoomable {
+  cursor: zoom-in;
+  transition: transform 0.3s ease-in-out;
+}
+.zoomable:hover {
+  transform: scale(1.03);
+}
+
+/* Full-screen zoom modal */
+.zoom-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+}
+
+.zoom-modal img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 10px;
+  animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.7); }
+  to { transform: scale(1); }
+}

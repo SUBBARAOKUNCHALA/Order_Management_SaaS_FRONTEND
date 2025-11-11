@@ -1,0 +1,31 @@
+.container {
+  max-width: 800px;
+}
+
+.btn-gradient {
+  background: linear-gradient(90deg, #007bff, #6610f2);
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background: linear-gradient(90deg, #6610f2, #007bff);
+    transform: translateY(-2px);
+  }
+
+  &:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+  }
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 1rem;
+}
+
+.form-control:focus {
+  border-color: #6610f2;
+  box-shadow: 0 0 0 0.2rem rgba(102, 16, 242, 0.25);
+}
