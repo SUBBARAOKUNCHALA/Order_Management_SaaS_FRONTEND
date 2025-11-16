@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { environment } from './environment';
+
 
 interface Product {
   sizes: boolean;
@@ -14,101 +16,88 @@ interface Product {
   createdAt?: string;
 }
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class AdminServiceService {
 
-  private baseUrl = 'http://localhost:5000/api/products';
-  private API = "http://localhost:5000/api/orders";
-
+  private baseUrl = `${environment.backendUrl}/api/products`;
+  private API = `${environment.backendUrl}/api/orders`;
 
   constructor(private http: HttpClient, private router: Router) {}
 
-addProduct(productData: any, image: File): Observable<any> {
-  const formData = new FormData();
+  addProduct(productData: any, image: File): Observable<any> {
+    const formData = new FormData();
 
-  for (let key in productData) {
-    formData.append(key, JSON.stringify(productData[key]));
+    for (let key in productData) {
+      formData.append(key, JSON.stringify(productData[key]));
+    }
+
+    if (image) formData.append("image", image);
+
+    return this.http.post(`${this.baseUrl}/fiadmin`, formData);
   }
 
-  if (image) formData.append("image", image);
-
-  return this.http.post(`${this.baseUrl}/fiadmin`, formData);
-}
-
-  /** GET: Fetch all products */
   getAllProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(this.baseUrl);
   }
+
   getProductImage(productId: string) {
-  return this.http.get(`http://localhost:5000/api/products/${productId}/image`);
-}
-AddToCart(productId: string, quantity: number, size: string) {
+    return this.http.get(`${environment.backendUrl}/api/products/${productId}/image`);
+  }
 
-  const token = localStorage.getItem('token'); // ✅ Correct place
+  AddToCart(productId: string, quantity: number, size: string) {
+    const token = localStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}` };
 
-  const headers = {
-    Authorization: `Bearer ${token}`
-  };
+    const body = { productId, quantity, size };
+    
+    return this.http.post(`${environment.backendUrl}/api/cart/add`, body, { headers });
+  }
 
-  const body = {
-    productId: productId,
-    quantity: quantity,
-    size: size
-  };
+  getCardsDataByUserId() {
+    return this.http.get(`${environment.backendUrl}/api/cart`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+    });
+  }
 
-  return this.http.post('http://localhost:5000/api/cart/add', body, { headers });
-}
+  updateCartItem(data: any) {
+    return this.http.put(`${environment.backendUrl}/api/cart/update`, data);
+  }
 
-getCardsDataByUserId() {
-  return this.http.get("http://localhost:5000/api/cart", {
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token")
-    }
-  });
-}
+  removeFromCart(data: any) {
+    return this.http.delete(`${environment.backendUrl}/api/cart/remove`, { body: data });
+  }
 
-updateCartItem(data: any) {
-  return this.http.put('http://localhost:5000/api/cart/update', data);
-}
+  clearCart() {
+    return this.http.delete(`${environment.backendUrl}/api/cart/clear`);
+  }
 
-removeFromCart(data: any) {
-  return this.http.delete('http://localhost:5000/api/cart/remove', {
-    body: data
-  });
-}
+  placeOrder(body:any) {
+    return this.http.post(this.API, body);
+  }
 
-clearCart() {
-  return this.http.delete('http://localhost:5000/api/cart/clear');
-}
+  getOrdersByUser() {
+    return this.http.get(this.API);
+  }
 
-placeOrder(body:any) {
-  return this.http.post(`${this.API}`, body);
-}
+  getOrderById(id: string) {
+    return this.http.get(`${this.API}/${id}`);
+  }
 
-getOrdersByUser() {
-  return this.http.get(`${this.API}`);        // ✅ GET /api/orders
-}
+  getAllOrders() {
+    return this.http.get(this.API);
+  }
 
-getOrderById(id: string) {
-  return this.http.get(`${this.API}/${id}`);  // ✅ GET /api/orders/:id
-}
+  getOrderDetails(id: string) {
+    return this.http.get(`${this.API}/${id}`);
+  }
 
-getAllOrders() {
-  return this.http.get(`${this.API}`);        // ✅ same as getOrdersByUser
-}
+  deleteOrder(id: string) {
+    return this.http.delete(`${this.API}/${id}`);
+  }
 
-getOrderDetails(id: string) {
-  return this.http.get(`${this.API}/${id}`);  // ✅ GET /api/orders/:id
-}
-
-
-deleteOrder(id: string) {
-  return this.http.delete(`${this.API}/${id}`); // ✅ DELETE /api/orders/:id
-}
-getPaymentQRForCart(amount: number) {
-  return this.http.get(`http://localhost:5000/api/payment/qr?amount=${amount}`);
-}
+  getPaymentQRForCart(amount: number) {
+    return this.http.get(`${environment.backendUrl}/api/payment/qr?amount=${amount}`);
+  }
 }
