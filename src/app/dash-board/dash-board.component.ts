@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AdminServiceService } from '../admin-service.service';
-import { Router, NavigationStart } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-
+import { environment } from 'src/environments/environment';
 
 interface Product {
   _id: string;
@@ -12,9 +11,11 @@ interface Product {
   category: string;
   price: number;
   discount?: number;
-  imageUrl: string;
-  createdAt?: string;
   sizes: string[];
+  createdAt?: string;
+
+  // Frontend only
+  imageUrl: string;
   selectedSize?: string;
   quantity?: number;
 }
@@ -23,20 +24,16 @@ interface Product {
   selector: 'app-dash-board',
   templateUrl: './dash-board.component.html',
   styleUrls: ['./dash-board.component.scss'],
-  
 })
-export class DashBoardComponent implements OnInit {
+export class DashBoardComponent implements OnInit, OnDestroy {
   products: Product[] = [];
   currentPage = 1;
   itemsPerPage = 10;
-  quantity: number = 1; // Default value
-  liked: any;
   private timeoutId: any;
   selectedProduct: Product | null = null;
   zoomImage: string | null = null;
 
   currentYear = new Date().getFullYear();
-
 
   constructor(
     private router: Router,
@@ -44,38 +41,32 @@ export class DashBoardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.fetchProducts()
+    this.fetchProducts();
     const token = localStorage.getItem("token");
 
-  if (!token) {
-    this.timeoutId = setTimeout(() => {
-      this.router.navigate(['/register']);
-    }, 5000);
-  }
-
+    if (!token) {
+      this.timeoutId = setTimeout(() => {
+        this.router.navigate(['/register']);
+      }, 5000);
+    }
   }
 
   ngOnDestroy(): void {
-  if (this.timeoutId) {
-    clearTimeout(this.timeoutId);
+    if (this.timeoutId) clearTimeout(this.timeoutId);
   }
-}
 
   fetchProducts(): void {
     this.adminservice.getAllProducts().subscribe({
       next: (data) => {
-        console.log('✅ Fetched products:', data);
         this.products = data.map(product => ({
           ...product,
-          imageUrl: product.imageUrl,   // ✅ FIXED
+          imageUrl: environment.backendUrl + product.imageUrl,
           sizes: Array.isArray(product.sizes) ? product.sizes : [],
           selectedSize: '',
           quantity: 1
         }));
       },
-      error: (err) => {
-        console.error('❌ Failed to fetch products', err);
-      }
+      error: (err) => console.error('❌ Failed to fetch products', err)
     });
   }
 
@@ -83,8 +74,6 @@ export class DashBoardComponent implements OnInit {
     const start = (this.currentPage - 1) * this.itemsPerPage;
     return this.products.slice(start, start + this.itemsPerPage);
   }
-
-
 
   get totalPages() {
     return Math.ceil(this.products.length / this.itemsPerPage);
@@ -103,13 +92,13 @@ export class DashBoardComponent implements OnInit {
   }
 
   viewDetails(product: Product) {
-    this.selectedProduct = product;
     this.selectedProduct = { ...product, quantity: product.quantity || 1 };
   }
 
   closeDetails() {
     this.selectedProduct = null;
   }
+
   openZoom(imageUrl: string) {
     this.zoomImage = imageUrl;
   }
@@ -118,31 +107,23 @@ export class DashBoardComponent implements OnInit {
     this.zoomImage = null;
   }
 
-  increaseQuantity(product: any) {
-    if (product.quantity) {
-      product.quantity++;
-    }
+  increaseQuantity(product: Product) {
+    if (product.quantity) product.quantity++;
   }
 
-  decreaseQuantity(product: any) {
-    if (product.quantity && product.quantity > 1) {
-      product.quantity--;
-    }
+  decreaseQuantity(product: Product) {
+    if (product.quantity && product.quantity > 1) product.quantity--;
   }
 
-  addToCart(product: any) {
-
+  addToCart(product: Product) {
     const token = localStorage.getItem('token');
-    console.log("TOKEN FOUND:", token);
 
     if (!token) {
       Swal.fire({
         icon: 'warning',
         title: 'Please Login',
         text: 'You must login before adding to cart'
-      }).then(() => {
-        this.router.navigate(['/login']);
-      });
+      }).then(() => this.router.navigate(['/login']));
       return;
     }
 
@@ -151,9 +132,9 @@ export class DashBoardComponent implements OnInit {
       return;
     }
 
-    this.adminservice.AddToCart(product._id, product.quantity, product.selectedSize)
+    this.adminservice.AddToCart(product._id, product.quantity!, product.selectedSize!)
       .subscribe({
-        next: (res) => {
+        next: () => {
           Swal.fire({
             title: 'Product added to cart!',
             icon: 'success',
@@ -161,17 +142,16 @@ export class DashBoardComponent implements OnInit {
             confirmButtonText: 'Go to Cart',
             cancelButtonText: 'Continue Shopping'
           }).then(result => {
-            if (result.isConfirmed) {
-              this.router.navigate(['/cart']);
-            }
+            if (result.isConfirmed) this.router.navigate(['/cart']);
           });
         },
         error: (err) => console.error("Add to cart error:", err)
       });
   }
+
   logout() {
-  localStorage.removeItem("token");
-  localStorage.removeItem("user");
-  this.router.navigate(['/login']);
-}
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    this.router.navigate(['/login']);
+  }
 }
