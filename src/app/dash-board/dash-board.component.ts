@@ -56,19 +56,22 @@ export class DashBoardComponent implements OnInit, OnDestroy {
   }
 
   fetchProducts(): void {
-    this.adminservice.getAllProducts().subscribe({
-      next: (data) => {
-        this.products = data.map(product => ({
-          ...product,
-          imageUrl: environment.backendUrl + product.imageUrl,
-          sizes: Array.isArray(product.sizes) ? product.sizes : [],
-          selectedSize: '',
-          quantity: 1
-        }));
-      },
-      error: (err) => console.error('❌ Failed to fetch products', err)
-    });
-  }
+  this.adminservice.getAllProducts().subscribe({
+    next: (data) => {
+      this.products = data.map(product => ({
+        ...product,
+        imageUrl: product.imageUrl.startsWith('http')
+          ? product.imageUrl      // full URL already
+          : environment.backendUrl + product.imageUrl, // prepend backend URL if relative
+        sizes: Array.isArray(product.sizes) ? product.sizes : [],
+        selectedSize: '',
+        quantity: 1
+      }));
+      console.log('✅ Products fetched successfully', this.products);
+    },
+    error: (err) => console.error('❌ Failed to fetch products', err)
+  });
+}
 
   get paginatedProducts() {
     const start = (this.currentPage - 1) * this.itemsPerPage;
