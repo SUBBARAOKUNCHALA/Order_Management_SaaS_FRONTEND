@@ -13,8 +13,7 @@ interface Product {
   discount?: number;
   sizes: string[];
   createdAt?: string;
-
-  // Frontend only
+  imagePath: string;
   imageUrl: string;
   selectedSize?: string;
   quantity?: number;
@@ -45,9 +44,7 @@ export class DashBoardComponent implements OnInit, OnDestroy {
     const token = localStorage.getItem("token");
 
     if (!token) {
-      this.timeoutId = setTimeout(() => {
         this.router.navigate(['/register']);
-      }, 5000);
     }
   }
 
@@ -60,9 +57,10 @@ export class DashBoardComponent implements OnInit, OnDestroy {
     next: (data) => {
       this.products = data.map(product => ({
         ...product,
-        imageUrl: product.imageUrl.startsWith('http')
-          ? product.imageUrl      // full URL already
-          : environment.backendUrl + product.imageUrl, // prepend backend URL if relative
+        imagePath: product.imagePath,
+        imageUrl: product.imagePath.startsWith('http')
+          ? product.imagePath
+          : environment.backendUrl + product.imagePath, // prepend backend URL if relative
         sizes: Array.isArray(product.sizes) ? product.sizes : [],
         selectedSize: '',
         quantity: 1

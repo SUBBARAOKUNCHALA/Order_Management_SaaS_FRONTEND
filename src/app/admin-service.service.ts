@@ -6,6 +6,7 @@ import { environment } from '../environments/environment';
 
 
 interface Product {
+  imagePath: any;
   sizes: boolean;
   _id: string;
   name: string;
@@ -42,9 +43,9 @@ export class AdminServiceService {
     return this.http.get<Product[]>(this.baseUrl);
   }
 
-  getProductImage(productId: string) {
-    return this.http.get(`${environment.backendUrl}/api/products/${productId}/image`);
-  }
+  // getProductImage(productId: string) {
+  //   return this.http.get(`${environment.backendUrl}/api/products/${productId}/image`);
+  // }
 
   AddToCart(productId: string, quantity: number, size: string) {
     const token = localStorage.getItem('token');
