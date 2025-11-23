@@ -137,41 +137,48 @@ closeZoom() {
     if (product.quantity && product.quantity > 1) product.quantity--;
   }
 
-  addToCart(product: Product) {
-    this.closeDetails();
-    const token = localStorage.getItem('token');
+addToCart(product: Product) {
+  this.closeDetails();
+  const token = localStorage.getItem('token');
 
-    if (!token) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Please Login',
-        text: 'You must login before adding to cart'
-      }).then(() => this.router.navigate(['/login']));
-      return;
-    }
-
-    if (!product.selectedSize) {
-      Swal.fire('Select Size', 'Please choose a size before adding to cart', 'warning');
-      return;
-    }
-
-    this.adminservice.AddToCart(product._id, product.quantity!, product.selectedSize!)
-      .subscribe({
-        next: () => {
-          this.isProductDialogVisible = true;
-          Swal.fire({
-            title: 'Product added to cart!',
-            icon: 'success',
-            showCancelButton: true,
-            confirmButtonText: 'Go to Cart',
-            cancelButtonText: 'Continue Shopping'
-          }).then(result => {
-            if (result.isConfirmed) this.router.navigate(['/cart']);
-          });
-        },
-        error: (err) => console.error("Add to cart error:", err)
-      });
+  if (!token) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Please Login',
+      text: 'You must login before adding to cart'
+    }).then(() => this.router.navigate(['/login']));
+    return;
   }
+
+  if (!product.selectedSize) {
+    Swal.fire('Select Size', 'Please choose a size before adding to cart', 'warning');
+    return;
+  }
+
+  this.adminservice.AddToCart(product._id, product.quantity!, product.selectedSize!)
+    .subscribe({
+      next: () => {
+        this.isProductDialogVisible = true;
+        Swal.fire({
+          title: 'Product added to cart!',
+          icon: 'success',
+          showCancelButton: true,
+          confirmButtonText: 'Go to Cart',
+          cancelButtonText: 'Continue Shopping'
+        }).then(result => {
+          if (result.isConfirmed) this.router.navigate(['/cart']);
+        });
+      },
+      error: (err: any) => {
+        console.error("Add to cart error:", err);
+        if (err.message === "Not authorized, token failed") {
+          localStorage.removeItem('token');
+          this.router.navigate(['/login']);
+        }
+      }
+    });
+}
+
   updateDropdownOptions() {
   this.pageOptions = Array.from({ length: this.totalPages }, (_, i) => ({
     label: (i + 1).toString(),
