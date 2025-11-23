@@ -2,50 +2,44 @@
 
 <div class="register-container">
   <p-card class="register-card">
-    
+
+    <!-- Header -->
     <div class="form-header">
-      <i class="pi pi-user-plus user-icon"></i>
       <h2>Create Your Account</h2>
       <p>Join us and explore the latest trends in fashion!</p>
     </div>
 
+    <!-- Form -->
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form-body">
 
+      <!-- Full Name -->
       <div class="p-field">
-        <!-- <label class="label">Full Name</label> -->
-        <span class="p-input-icon-left w-full">
-          <i class="pi pi-user"></i>
-          <input pInputText formControlName="name" class="w-full input-text" placeholder="Enter your full name"/>
-        </span>
+        <input pInputText formControlName="name" class="input-text" placeholder="Full Name" required/>
       </div>
 
+      <!-- Email -->
       <div class="p-field">
-        <!-- <label class="label">Email Address</label> -->
-        <span class="p-input-icon-left w-full">
-          <i class="pi pi-envelope"></i>
-          <input pInputText formControlName="email" class="w-full input-text" placeholder="example@gmail.com"/>
-        </span>
+        <input pInputText formControlName="email" class="input-text" placeholder="Email" required/>
       </div>
 
+      <!-- Password -->
       <div class="p-field">
-        <!-- <label class="label">Password</label> -->
-        <span class="p-input-icon-left w-full">
-          <i class="pi pi-lock"></i>
-          <p-password formControlName="password"
-            class="w-full"
-            [toggleMask]="true"
-            [feedback]="false"
-            inputStyleClass="w-full input-text"
-            placeholder="Enter your password">
-          </p-password>
-        </span>
-      </div>
+  <p-password type="password" name="password"
+              placeholder="Password"
+              [toggleMask]="false"
+              [feedback]="false"
+              inputStyleClass="input-text"
+              required>
+  </p-password>
+</div>
 
+      <!-- Submit -->
       <button pButton type="submit" label="Register"
-        class="p-button-rounded p-button-lg w-full submit-btn"
-        [disabled]="registerForm.invalid"></button>
+              class="p-button-rounded p-button-lg w-full submit-btn"
+              [disabled]="registerForm.invalid"></button>
     </form>
 
+    <!-- Login Link -->
     <p class="login-text">
       Already have an account?  
       <a routerLink="/login">Login here</a>

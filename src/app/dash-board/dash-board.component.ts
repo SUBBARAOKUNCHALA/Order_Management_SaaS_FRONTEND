@@ -171,8 +171,7 @@ addToCart(product: Product) {
       },
       error: (err: any) => {
         console.error("Add to cart error:", err);
-        if (err) {
-          localStorage.removeItem('token');
+        if (err.status === 401) {
           this.router.navigate(['/login']);
         }
       }

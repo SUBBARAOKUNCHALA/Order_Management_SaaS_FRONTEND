@@ -2,44 +2,44 @@
 
 <div class="login-wrapper">
   <p-card class="login-card shadow-5">
-    
+
+    <!-- Header -->
     <div class="form-header">
-      <i class="pi pi-sign-in user-icon"></i>
       <h2>Welcome Back</h2>
       <p>Login to continue to Fashion Hub</p>
     </div>
 
+    <!-- Form -->
     <form (ngSubmit)="login()" #loginForm="ngForm" class="form-body">
 
+      <!-- Email -->
       <div class="p-field">
-        <!-- <label class="label">Email</label> -->
-        <span class="p-input-icon-left w-full">
-          <i class="pi pi-envelope"></i>
-          <input pInputText type="email" name="email" [(ngModel)]="data.email" placeholder="Enter your email" class="w-full input-text" required/>
-        </span>
-      </div>
+  <input pInputText type="email" name="email" [(ngModel)]="data.email" placeholder="Email"
+         class="input-text" required/>
+</div>
 
-      <div class="p-field">
-        <!-- <label class="label">Password</label> -->
-        <span class="p-input-icon-left w-full">
-          <i class="pi pi-lock"></i>
-          <p-password type="password" name="password" [(ngModel)]="data.password" placeholder="Enter your password"
-            [toggleMask]="true"
-            [feedback]="false"
-            inputStyleClass="w-full input-text"
-            required>
-          </p-password>
-        </span>
-      </div>
+<div class="p-field">
+  <p-password type="password" name="password" [(ngModel)]="data.password"
+              placeholder="Password"
+              [toggleMask]="false"
+              [feedback]="false"
+              inputStyleClass="input-text"
+              required>
+  </p-password>
+</div>
 
-      <button pButton type="submit" label="Login" class="p-button-rounded p-button-lg w-full submit-btn"
-        [disabled]="loginForm.invalid"></button>
+      <!-- Submit -->
+      <button pButton type="submit" label="Login"
+              class="p-button-rounded p-button-lg w-full submit-btn"
+              [disabled]="loginForm.invalid"></button>
 
+      <!-- Alerts -->
       <div *ngIf="successMessage" class="alert success-alert">{{ successMessage }}</div>
       <div *ngIf="errorMessage" class="alert error-alert">{{ errorMessage }}</div>
 
     </form>
 
+    <!-- Register -->
     <p class="register-text">
       Don't have an account? <a routerLink="/register">Register here</a>
     </p>
