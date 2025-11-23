@@ -171,7 +171,7 @@ addToCart(product: Product) {
       },
       error: (err: any) => {
         console.error("Add to cart error:", err);
-        if (err.message === "Not authorized, token failed") {
+        if (err) {
           localStorage.removeItem('token');
           this.router.navigate(['/login']);
         }
