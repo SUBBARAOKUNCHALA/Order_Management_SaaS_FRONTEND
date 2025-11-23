@@ -19,9 +19,18 @@ import { OrderListComponent } from './order-list/order-list.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
-
-
+import { MenubarModule } from 'primeng/menubar';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { PaginatorModule } from 'primeng/paginator';
+import { InputTextModule } from 'primeng/inputtext';
+import { ChipModule } from 'primeng/chip';
+import { TagModule } from 'primeng/tag';
+import { SidebarModule } from 'primeng/sidebar';
+import { PasswordModule } from 'primeng/password';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { StepsModule } from 'primeng/steps';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +54,19 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     BrowserAnimationsModule,
     MatCardModule,
     MatDividerModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MenubarModule,
+    CardModule,
+    ButtonModule,
+    DialogModule,
+    PaginatorModule,
+    InputTextModule,
+    ChipModule,
+    TagModule,
+    SidebarModule,
+    PasswordModule,
+    ProgressSpinnerModule,
+    StepsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }

@@ -27,12 +27,17 @@ interface Product {
 export class DashBoardComponent implements OnInit, OnDestroy {
   products: Product[] = [];
   currentPage = 1;
-  itemsPerPage = 10;
+  itemsPerPage = 8;
   private timeoutId: any;
   selectedProduct: Product | null = null;
   zoomImage: string | null = null;
+  mobileMenu: boolean = false;
+  pageOptions: any[] = [];
 
   currentYear = new Date().getFullYear();
+
+  isProductDialogVisible: boolean = false;
+isZoomDialogVisible: boolean = false;
 
   constructor(
     private router: Router,
@@ -41,11 +46,6 @@ export class DashBoardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.fetchProducts();
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-        this.router.navigate(['/register']);
-    }
   }
 
   ngOnDestroy(): void {
@@ -66,47 +66,68 @@ export class DashBoardComponent implements OnInit, OnDestroy {
         quantity: 1
       }));
       console.log('✅ Products fetched successfully', this.products);
+      this.currentPage = 1;
+      this.updateDropdownOptions();
     },
     error: (err) => console.error('❌ Failed to fetch products', err)
   });
 }
 
-  get paginatedProducts() {
-    const start = (this.currentPage - 1) * this.itemsPerPage;
-    return this.products.slice(start, start + this.itemsPerPage);
-  }
+get paginatedProducts() {
+  const start = (this.currentPage - 1) * this.itemsPerPage;
+  const end = start + this.itemsPerPage;
+  return this.products.slice(start, end);
+}
+
 
   get totalPages() {
     return Math.ceil(this.products.length / this.itemsPerPage);
   }
 
-  nextPage() {
-    if (this.currentPage < this.totalPages) this.currentPage++;
+ nextPage() {
+  if (this.currentPage < this.totalPages) {
+    this.currentPage++;
   }
+}
 
-  prevPage() {
-    if (this.currentPage > 1) this.currentPage--;
+prevPage() {
+  if (this.currentPage > 1) {
+    this.currentPage--;
   }
+}
+  toggleMobileMenu() {
+  this.mobileMenu = !this.mobileMenu;
+}
+
+navigate(route: string) {
+  this.mobileMenu = false;
+  this.navigateTo(route);
+}
 
   navigateTo(path: string) {
     this.router.navigate([`/${path}`]);
   }
 
   viewDetails(product: Product) {
-    this.selectedProduct = { ...product, quantity: product.quantity || 1 };
-  }
+  this.selectedProduct = { ...product, quantity: product.quantity || 1 };
+  this.isProductDialogVisible = true;
+}
 
-  closeDetails() {
-    this.selectedProduct = null;
-  }
+closeDetails() {
+  this.isProductDialogVisible = false;
+  this.selectedProduct = null;
+}
 
-  openZoom(imageUrl: string) {
-    this.zoomImage = imageUrl;
-  }
+openZoom(imageUrl: string) {
+  this.zoomImage = imageUrl;
+  this.isZoomDialogVisible = true;
+}
 
-  closeZoom() {
-    this.zoomImage = null;
-  }
+closeZoom() {
+  this.isZoomDialogVisible = false;
+  this.zoomImage = null;
+}
+
 
   increaseQuantity(product: Product) {
     if (product.quantity) product.quantity++;
@@ -117,6 +138,7 @@ export class DashBoardComponent implements OnInit, OnDestroy {
   }
 
   addToCart(product: Product) {
+    this.closeDetails();
     const token = localStorage.getItem('token');
 
     if (!token) {
@@ -136,6 +158,7 @@ export class DashBoardComponent implements OnInit, OnDestroy {
     this.adminservice.AddToCart(product._id, product.quantity!, product.selectedSize!)
       .subscribe({
         next: () => {
+          this.isProductDialogVisible = true;
           Swal.fire({
             title: 'Product added to cart!',
             icon: 'success',
@@ -149,10 +172,20 @@ export class DashBoardComponent implements OnInit, OnDestroy {
         error: (err) => console.error("Add to cart error:", err)
       });
   }
+  updateDropdownOptions() {
+  this.pageOptions = Array.from({ length: this.totalPages }, (_, i) => ({
+    label: (i + 1).toString(),
+    value: i + 1
+  }));
+}
+
 
   logout() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     this.router.navigate(['/login']);
   }
+
+  goToPage() {
+}
 }

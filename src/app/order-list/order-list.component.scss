@@ -1,193 +1,181 @@
+.container {
+  font-family: 'Poppins', sans-serif;
+}
+
 .page-title {
-  font-size: 28px;
-  font-weight: 700;
+  font-weight: 600;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
   text-align: center;
-  margin-bottom: 20px;
-  animation: fadeIn 1s ease;
 }
 
 .order-card {
-  background: #ffffff;
-  padding: 25px;
-  border-radius: 18px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.12);
-  transition: 0.3s ease-in-out;
-}
-
-.order-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 25px rgba(0,0,0,0.18);
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .section-title {
-  font-size: 20px;
   font-weight: 600;
-  margin-bottom: 12px;
+  margin-bottom: 0.8rem;
 }
 
-.order-section p {
-  margin: 6px 0;
-  font-size: 15px;
-}
-
-/* ITEM ROW */
-.item-row {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin: 12px 0;
-  padding: 12px;
-  background: #fafafa;
-  border-radius: 12px;
-  transition: 0.3s;
-  border: 1px solid #eee;
-}
-
-.item-row:hover {
-  background: #f3f9ff;
-  transform: scale(1.02);
-}
-
-.item-img {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-}
-
-.item-name {
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.item-price {
-  font-size: 16px;
-  color: #2e7d32;
-  font-weight: 700;
-}
-
-.total-amount {
-  color: #000;
-  font-size: 24px;
-  font-weight: 700;
-  text-align: right;
-}
-
-/* STATUS BADGES */
-.status-badge {
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-weight: 600;
-  text-transform: capitalize;
-  animation: fadeIn 1s ease;
-}
-
-.status-badge.pending { background: #fff3cd; color: #b8860b; }
-.status-badge.completed { background: #d4edda; color: #155724; }
-.status-badge.cancelled { background: #f8d7da; color: #842029; }
-
-/* BUTTON */
-.animated-btn {
-  transition: 0.3s ease;
-  background: linear-gradient(135deg, #007bff, #0056d2);
-  border: none;
-  border-radius: 12px;
-}
-
-.animated-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(0,123,255,0.4);
-}
-
-/* ANIMATIONS */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.animate-fade-in { animation: fadeIn 0.8s ease; }
-.animate-slide-up { animation: slideUp 0.6s ease; }
 .tracking-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 25px 0;
   position: relative;
-}
-
-/* ✅ Clean & Perfect Myntra-Style Order Tracking */
-.tracking-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 35px 0;
-  padding: 0 10px;
-  position: relative;
+  flex-wrap: wrap;
 }
 
 .tracking-step {
+  position: relative;
+  flex: 1;
+  min-width: 60px;
+  margin-bottom: 1rem;
+}
+
+.tracking-step .circle {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #ccc;
+  margin-bottom: 0.5rem;
+  z-index: 2;
+}
+
+.tracking-step .circle.active {
+  background-color: #007ad9;
+}
+
+.tracking-step .label {
+  font-size: 0.8rem;
+  text-align: center;
+  color: #666;
+}
+
+.tracking-step .label.active-text {
+  font-weight: 600;
+  color: #007ad9;
+}
+
+.tracking-step .line {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  height: 3px;
+  width: 100%;
+  background-color: #ccc;
+  z-index: 1;
+  transform: translateX(50%);
+}
+
+.tracking-step .line.active-line {
+  background-color: #007ad9;
+}
+
+.order-items .item-row {
+  border-radius: 8px;
+  padding: 0.5rem;
+  transition: 0.3s;
+  &:hover {
+    background-color: #f9f9f9;
+  }
+}
+
+.item-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.item-info .item-name {
+  font-weight: 500;
+}
+
+.total-amount {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.btn-primary {
+  background-color: #007ad9;
+  border: none;
+  color: #fff;
+  &:hover {
+    background-color: #005bb5;
+  }
+}
+
+@media (max-width: 768px) {
+  .tracking-container {
+    flex-direction: column;
+  }
+  .tracking-step .line {
+    width: 3px;
+    height: 50px;
+    top: 25px;
+    left: 12px;
+    transform: none;
+  }
+  .tracking-step .label {
+    margin-left: 30px;
+    text-align: left;
+  }
+}
+.dot-progress {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2rem 0;
+  position: relative;
+}
+
+.dot-step {
   display: flex;
   flex-direction: column;
   align-items: center;
   flex: 1;
+  text-align: center;
   position: relative;
 }
 
-/* ✅ Circles */
-.circle {
-  width: 26px;
-  height: 26px;
+.dot {
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
-  background: #d6d6d6;
-  border: 3px solid #bfbfbf;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #ccc;
+  margin-bottom: 0.3rem;
+  position: relative;
   z-index: 2;
 }
 
-.circle.active {
-  background: #28a745;
-  border-color: #28a745;
-  transform: scale(1.25);
-  box-shadow: 0 0 12px rgba(40,167,69,0.7);
-}
-
-/* ✅ Labels */
-.label {
-  margin-top: 6px;
-  font-size: 13px;
-  color: #777;
-  font-weight: 500;
-}
-
-.label.active-text {
-  color: #28a745;
-  font-weight: 700;
-}
-
-/* ✅ Connecting Line */
-.line {
+.dot::after {
+  content: '';
   position: absolute;
-  top: 13px;
+  top: 50%;
   left: 50%;
   width: 100%;
   height: 4px;
-  background: #d6d6d6;
+  background: #ccc;
   z-index: 1;
-  transition: background 0.4s ease;
+  transform: translate(-50%, -50%) scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s;
 }
 
-.active-line {
-  background: #28a745;
-  box-shadow: 0 0 4px rgba(40,167,69,0.7);
+.dot.active {
+  background-color: #007ad9;
 }
 
-/* ✅ Fix last step line */
-.tracking-step:last-child .line {
-  display: none;
+.dot.active::after {
+  transform: translate(-50%, -50%) scaleX(1);
+}
+
+.dot-label {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.dot-label.active-text {
+  color: #007ad9;
+  font-weight: 600;
 }

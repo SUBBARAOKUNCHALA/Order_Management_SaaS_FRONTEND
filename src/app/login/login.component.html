@@ -1,43 +1,47 @@
-<div class="login-container">
-    <h2>Login</h2>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-    <div *ngIf="successMessage" class="alert success-alert">
-      {{ successMessage }}
+<div class="login-wrapper">
+  <p-card class="login-card shadow-5">
+    
+    <div class="form-header">
+      <i class="pi pi-sign-in user-icon"></i>
+      <h2>Welcome Back</h2>
+      <p>Login to continue to Fashion Hub</p>
     </div>
 
-    <div *ngIf="errorMessage" class="alert error-alert">
-      {{ errorMessage }}
-    </div>
+    <form (ngSubmit)="login()" #loginForm="ngForm" class="form-body">
 
-    <form (ngSubmit)="login()" #loginForm="ngForm">
-      <div class="form-group">
-        <label>Email</label>
-        <input
-          type="email"
-          name="email"
-          placeholder="Enter Registered Email"
-          [(ngModel)]="data.email"
-          required
-        />
+      <div class="p-field">
+        <!-- <label class="label">Email</label> -->
+        <span class="p-input-icon-left w-full">
+          <i class="pi pi-envelope"></i>
+          <input pInputText type="email" name="email" [(ngModel)]="data.email" placeholder="Enter your email" class="w-full input-text" required/>
+        </span>
       </div>
 
-      <div class="form-group">
-        <label>Password</label>
-        <input
-          type="password"
-          name="password"
-           placeholder="Enter Password"
-          [(ngModel)]="data.password"
-          required
-        />
+      <div class="p-field">
+        <!-- <label class="label">Password</label> -->
+        <span class="p-input-icon-left w-full">
+          <i class="pi pi-lock"></i>
+          <p-password type="password" name="password" [(ngModel)]="data.password" placeholder="Enter your password"
+            [toggleMask]="true"
+            [feedback]="false"
+            inputStyleClass="w-full input-text"
+            required>
+          </p-password>
+        </span>
       </div>
 
-      <button type="submit" class="login-btn" [disabled]="loginForm.invalid">
-        Login
-      </button>
+      <button pButton type="submit" label="Login" class="p-button-rounded p-button-lg w-full submit-btn"
+        [disabled]="loginForm.invalid"></button>
+
+      <div *ngIf="successMessage" class="alert success-alert">{{ successMessage }}</div>
+      <div *ngIf="errorMessage" class="alert error-alert">{{ errorMessage }}</div>
+
     </form>
 
-    <p class="register-link">
-      Don't have an account? <a routerLink="/register">Register</a>
+    <p class="register-text">
+      Don't have an account? <a routerLink="/register">Register here</a>
     </p>
+  </p-card>
 </div>

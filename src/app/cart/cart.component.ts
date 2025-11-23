@@ -26,6 +26,7 @@ export class CartComponent {
     this.adminService.getCardsDataByUserId().subscribe({
       next: (response: any) => {
         this.cartItems = response.items || [];
+        console.log("🛒 Cart Items:", this.cartItems);
       }
     });
   }
