@@ -3,6 +3,7 @@ import { AdminServiceService } from '../admin-service.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 interface Product {
   _id: string;
@@ -41,7 +42,8 @@ isZoomDialogVisible: boolean = false;
 
   constructor(
     private router: Router,
-    private adminservice: AdminServiceService
+    private adminservice: AdminServiceService,
+     private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {
@@ -52,7 +54,9 @@ isZoomDialogVisible: boolean = false;
     if (this.timeoutId) clearTimeout(this.timeoutId);
   }
 
-  fetchProducts(): void {
+fetchProducts(): void {
+  this.spinner.show();   //  SHOW SPINNER
+
   this.adminservice.getAllProducts().subscribe({
     next: (data) => {
       this.products = data.map(product => ({
@@ -60,16 +64,24 @@ isZoomDialogVisible: boolean = false;
         imagePath: product.imagePath,
         imageUrl: product.imagePath.startsWith('http')
           ? product.imagePath
-          : environment.backendUrl + product.imagePath, // prepend backend URL if relative
+          : environment.backendUrl + product.imagePath,
         sizes: Array.isArray(product.sizes) ? product.sizes : [],
         selectedSize: '',
         quantity: 1
       }));
-      console.log('✅ Products fetched successfully', this.products);
+
+      console.log('Products fetched successfully', this.products);
       this.currentPage = 1;
       this.updateDropdownOptions();
+      setTimeout(()=>{
+        this.spinner.hide();
+      },3000)
+        //  HIDE SPINNER
     },
-    error: (err) => console.error('❌ Failed to fetch products', err)
+    error: (err) => {
+      console.error(' Failed to fetch products', err);
+      this.spinner.hide();  //  HIDE EVEN ON ERROR
+    }
   });
 }
 

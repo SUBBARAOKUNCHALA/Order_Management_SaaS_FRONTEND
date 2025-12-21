@@ -30,6 +30,7 @@ import { TagModule } from 'primeng/tag';
 import { SidebarModule } from 'primeng/sidebar';
 import { PasswordModule } from 'primeng/password';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { StepsModule } from 'primeng/steps';
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { StepsModule } from 'primeng/steps';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
+    NgxSpinnerModule,
     FormsModule,
     MatSnackBarModule,
     BrowserAnimationsModule,
