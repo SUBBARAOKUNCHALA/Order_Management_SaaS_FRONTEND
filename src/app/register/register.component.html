@@ -10,7 +10,7 @@
     </div>
 
     <!-- Form -->
-    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="form-body">
+    <form [formGroup]="registerForm" class="form-body">
 
       <!-- Full Name -->
       <div class="p-field">
@@ -34,7 +34,7 @@
 </div>
 
       <!-- Submit -->
-      <button pButton type="submit" label="Register"
+      <button pButton type="submit" (click)="onSubmit()" label="Register" 
               class="p-button-rounded p-button-lg w-full submit-btn"
               ></button>
     </form>
