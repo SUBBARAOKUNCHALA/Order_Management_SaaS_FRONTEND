@@ -179,3 +179,103 @@
   color: #007ad9;
   font-weight: 600;
 }
+.dot-progress {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  margin: 20px 0;
+}
+
+.dot-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+  text-align: center;
+}
+
+/* Dots */
+.dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  z-index: 2;
+  position: relative;
+  transition: background 0.3s;
+}
+
+.dot.active {
+  background: #4caf50; /* Active color */
+}
+
+/* Connecting lines */
+.dot-step::after {
+  content: '';
+  position: absolute;
+  top: 17%;
+  left: 50%;
+  width: 100%;
+  height: 4px;
+  background: #e0e0e0;
+  z-index: 1;
+  transform: translateY(-50%);
+  border-radius: 2px;
+}
+
+.dot-step:last-child::after {
+  display: none; /* Remove line for last step */
+}
+
+.dot-step:nth-child(n+2)::before {
+  content: '';
+  position: absolute;
+  top: 17%;
+  left: -50%;
+  width: 100%;
+  height: 4px;
+  background: #4caf50; /* Filled part */
+  z-index: 1;
+  transform: translateY(-50%);
+  border-radius: 2px;
+  transition: width 0.3s;
+}
+
+/* Labels */
+.dot-label {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #555;
+  transition: color 0.3s;
+}
+
+.dot-label.active-text {
+  color: #4caf50;
+  font-weight: bold;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .dot-progress {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dot-step {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .dot-label {
+    margin-top: 0;
+    margin-left: 10px;
+  }
+
+  .dot-step::after,
+  .dot-step:nth-child(n+2)::before {
+    display: none;
+  }
+}
